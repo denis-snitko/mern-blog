@@ -1,0 +1,25 @@
+version: '3'
+services:
+  backend:
+    image: backend
+    container_name: backend
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+  frontend:
+    image: frontend
+    container_name: frontend
+    environment:
+        - REACT_APP_API=${REACT_APP_API}
+        - REACT_APP_API_PREFIX=${REACT_APP_API_PREFIX}
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+
